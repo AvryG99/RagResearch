@@ -1,0 +1,27 @@
+# Ignore virtual environment
+env/
+
+# Ignore local model storage
+my_minilm_model/
+
+# Ignore PDF papers
+papers/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Streamlit cache and logs
+.streamlit/
+*.log
+
+# VSCode settings
+.vscode/
+
+# System-specific files
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
