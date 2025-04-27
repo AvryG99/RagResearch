@@ -29,9 +29,9 @@ def generate_answer_with_rag(query: str, top_k=5) -> str:
 
     {context}
 
-    Can you help me summarize the papers for the user based on their question? And include the abstract urls.
+    Can you help me summarize only the papers that directly address the user's question, excluding any papers that are not related? Please include the abstract URLs for each paper.
 
-    If some papers that are not really related as you think, just skip it and do not mention.
+    The answer is:
     """
 
     try:
@@ -42,7 +42,7 @@ def generate_answer_with_rag(query: str, top_k=5) -> str:
             {"role": "user", "content": prompt}
         ],
         max_tokens=10000,
-        temperature=0.5)
+        temperature=0.1)
 
         # Extract and return the answer
         answer = response.choices[0].message.content.strip()

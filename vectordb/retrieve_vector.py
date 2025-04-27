@@ -2,6 +2,7 @@
 import os
 from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone
+import streamlit as st
 
 # === Load .env and keys ===
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,10 +14,15 @@ INDEX_NAME = "research-abstracts"
 pc = Pinecone(api_key=PINECONE_API_KEY)
 index = pc.Index(INDEX_NAME)
 
-# === Load embedding model ===
-model = SentenceTransformer("my_minilm_model")
+@st.cache_resource
+def load_minilm_model():
+    """
+    Load and cache the MiniLM model.
+    """
+    return SentenceTransformer("my_minilm_model")
 
-# === Retrieval function ===
+model = load_minilm_model()
+
 def retrieve_similar_papers(query_text, top_k=5):
     """
     Retrieve top-k most similar papers from Pinecone based on the query.
@@ -52,4 +58,3 @@ def retrieve_similar_papers(query_text, top_k=5):
     except Exception as e:
         print(f"Error querying Pinecone: {e}")
         return []
-
