@@ -1,50 +1,55 @@
+# vectordb/retrieve_vector.py
 import os
 from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone
-import numpy as np
-from dotenv import load_dotenv
 
-# === Load .env from parent directory ===
+# === Load .env and keys ===
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-load_dotenv(os.path.join(BASE_DIR, ".env"))
-
-# === Pinecone credentials from .env ===
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 PINECONE_ENV = os.getenv("PINECONE_ENV")
-INDEX_NAME = "research-sections"
+INDEX_NAME = "research-abstracts"
 
-# === Initialize Pinecone client and Retrieval Model ===
+# === Initialize Pinecone ===
 pc = Pinecone(api_key=PINECONE_API_KEY)
-model = SentenceTransformer('my_minilm_model')
+index = pc.Index(INDEX_NAME)
 
-# === Query function ===
-def retrieve_top_k_vectors(query, top_k=5):
-    query_embedding = model.encode(query).tolist()
-    index = pc.Index(INDEX_NAME)
-    query_response = index.query(
-        vector=query_embedding,
-        top_k=top_k,
-        include_metadata=True
-    )
-    
-    results = []
-    for match in query_response['matches']:
-        results.append({
-            "id": match['id'],
-            "score": match['score'],
-            "metadata": match['metadata']
-        })
-    
-    return results
+# === Load embedding model ===
+model = SentenceTransformer("my_minilm_model")
 
+# === Retrieval function ===
+def retrieve_similar_papers(query_text, top_k=5):
+    """
+    Retrieve top-k most similar papers from Pinecone based on the query.
+    """
+    # Step 1: Encode the query text into a vector
+    query_vector = model.encode(query_text).tolist()
 
-if __name__ == "__main__":
-    query = "machine learning applications in healthcare"
-    top_k_results = retrieve_top_k_vectors(query, top_k=5)
-    
-    for idx, result in enumerate(top_k_results):
-        print(f"Rank {idx + 1}:")
-        print(f"ID: {result['id']}")
-        print(f"Score: {result['score']}")
-        print(f"Metadata: {result['metadata']}")
-        print("---")
+    # Step 2: Perform the query on Pinecone
+    query_params = {
+        "top_k": top_k,
+        "vector": query_vector,
+        "include_metadata": True  # Include metadata in the results
+    }
+
+    # Perform the query to Pinecone
+    try:
+        results = index.query(**query_params)
+        
+        # Step 3: Process and return the results
+        papers = []
+        for match in results['matches']:
+            paper = {
+                "id": match['id'],
+                "title": match['metadata']['title'],
+                "authors": match['metadata']['authors'],
+                "pdf_url": match['metadata']['pdf_url'],
+                "abstract_url": match['metadata']['abstract_url']
+            }
+            papers.append(paper)
+
+        return papers
+
+    except Exception as e:
+        print(f"Error querying Pinecone: {e}")
+        return []
+

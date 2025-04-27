@@ -14,23 +14,20 @@ PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 PINECONE_ENV = os.getenv("PINECONE_ENV")
 INDEX_NAME = "research-abstracts"
 
-# === Initialize Pinecone ===
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
 if INDEX_NAME not in pc.list_indexes().names():
     pc.create_index(
         name=INDEX_NAME,
-        dimension=384,  # Ensure this matches the embedding size
+        dimension=384,
         metric='cosine',
         spec=ServerlessSpec(cloud="aws", region=PINECONE_ENV)
     )
 
 index = pc.Index(INDEX_NAME)
 
-# === Load embedding model ===
 model = SentenceTransformer("my_minilm_model")
 
-# === Helper: build and upsert vectors from CSVs ===
 def process_conference_year(folder_path, year):
     abstracts_path = os.path.join(folder_path, "abstracts.csv")
     authors_path = os.path.join(folder_path, "authors.csv")
@@ -63,7 +60,6 @@ def process_conference_year(folder_path, year):
         if not title or len(abstract) < 30:
             continue
 
-        # Generate the embedding for the abstract
         embedding = model.encode(abstract).tolist()
         vector_id = str(uuid.uuid4())
 
@@ -74,7 +70,6 @@ def process_conference_year(folder_path, year):
             "pdf_url": str(row.get("pdf_url", ""))
         }
 
-        # Upsert the embedding and metadata into Pinecone
         try:
             upsert_response = index.upsert([{
                 "id": vector_id,
@@ -87,7 +82,6 @@ def process_conference_year(folder_path, year):
 
     print(f"{year} papers indexed.")
 
-# === Main entry ===
 def build_vector_db(base_conference_path):
     for year in sorted(os.listdir(base_conference_path)):
         year_path = os.path.join(base_conference_path, year)
