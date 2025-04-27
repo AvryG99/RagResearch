@@ -1,8 +1,6 @@
 # Ignore virtual environment
 env/
 
-# Ignore local model storage
-my_minilm_model/
 
 # Ignore PDF papers
 papers/
