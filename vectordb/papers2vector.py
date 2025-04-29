@@ -12,7 +12,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 PINECONE_ENV = os.getenv("PINECONE_ENV")
-INDEX_NAME = "research-abstracts"
+INDEX_NAME = "research-database"
 
 pc = Pinecone(api_key=PINECONE_API_KEY)
 

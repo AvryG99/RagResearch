@@ -8,7 +8,7 @@ import streamlit as st
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 PINECONE_ENV = os.getenv("PINECONE_ENV")
-INDEX_NAME = "research-abstracts"
+INDEX_NAME = "research-database"
 
 # === Initialize Pinecone ===
 pc = Pinecone(api_key=PINECONE_API_KEY)
@@ -58,3 +58,6 @@ def retrieve_similar_papers(query_text, top_k=5):
     except Exception as e:
         print(f"Error querying Pinecone: {e}")
         return []
+
+def test():
+    return 1

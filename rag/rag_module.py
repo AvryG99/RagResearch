@@ -1,5 +1,4 @@
 from openai import OpenAI
-
 import os
 from vectordb.retrieve_vector import retrieve_similar_papers
 
@@ -36,7 +35,7 @@ def generate_answer_with_rag(query: str, top_k=5) -> str:
 
     try:
         # Use v1/chat/completions endpoint for chat models
-        response = client.chat.completions.create(model="gpt-4o",  # or "gpt-4o" if available
+        response = client.chat.completions.create(model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a helpful research assistant."},
             {"role": "user", "content": prompt}
@@ -48,7 +47,7 @@ def generate_answer_with_rag(query: str, top_k=5) -> str:
         answer = response.choices[0].message.content.strip()
         return answer
     except Exception as e:
-        print(f"Error querying GPT-4: {e}")
+        print(f"Error querying GPT-4o: {e}")
         return "Error generating the answer."
 
 # === Example Usage (For testing purposes) ===
