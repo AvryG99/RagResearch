@@ -4,13 +4,11 @@ from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone
 import streamlit as st
 
-# === Load .env and keys ===
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 PINECONE_ENV = os.getenv("PINECONE_ENV")
 INDEX_NAME = "research-database"
 
-# === Initialize Pinecone ===
 pc = Pinecone(api_key=PINECONE_API_KEY)
 index = pc.Index(INDEX_NAME)
 
@@ -27,21 +25,17 @@ def retrieve_similar_papers(query_text, top_k=5):
     """
     Retrieve top-k most similar papers from Pinecone based on the query.
     """
-    # Step 1: Encode the query text into a vector
     query_vector = model.encode(query_text).tolist()
 
-    # Step 2: Perform the query on Pinecone
     query_params = {
         "top_k": top_k,
         "vector": query_vector,
-        "include_metadata": True  # Include metadata in the results
+        "include_metadata": True
     }
 
-    # Perform the query to Pinecone
     try:
         results = index.query(**query_params)
         
-        # Step 3: Process and return the results
         papers = []
         for match in results['matches']:
             paper = {

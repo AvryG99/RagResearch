@@ -15,11 +15,10 @@ INDEX_NAME = "paper-contents"
 # === Initialize Pinecone Client ===
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
-# === Check if the index exists, and if not, create it ===
 if INDEX_NAME not in pc.list_indexes().names():
     pc.create_index(
         name=INDEX_NAME,
-        dimension=384,  # The dimension for miniLM embeddings
+        dimension=384,
         metric='cosine',
         spec=ServerlessSpec(cloud="aws", region=PINECONE_ENV)
     )
@@ -32,19 +31,18 @@ model = SentenceTransformer("my_minilm_model")
 # === Load the paper data and split it into chunks ===
 def split_text_into_chunks(text, chunk_size=1000, overlap_size=200):
     """Split text into overlapping chunks based on the token count."""
-    words = text.split()  # Split by spaces into words
+    words = text.split()
     chunks = []
     for i in range(0, len(words), chunk_size - overlap_size):
         chunk = " ".join(words[i:i + chunk_size])
         chunks.append(chunk)
     return chunks
 
-# === PDF extraction ===
 def extract_text_from_pdf(filepath):
     doc = fitz.open(filepath)
     full_text = ""
     for page in doc:
-        full_text += page.get_text("text")  # Extract text
+        full_text += page.get_text("text") 
     doc.close()
     return full_text
 

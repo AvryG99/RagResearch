@@ -33,7 +33,7 @@ def retrieve_related_chunks_by_titles(titles, top_k=100):
 
         try:
             response = index.query(
-                vector=[0.0] * 384,  # Dummy vector because we use only filtering
+                vector=[0.0] * 384,
                 filter=query_filter,
                 top_k=top_k,
                 include_metadata=True

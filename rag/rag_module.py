@@ -34,7 +34,6 @@ def generate_answer_with_rag(query: str, top_k=5) -> str:
     """
 
     try:
-        # Use v1/chat/completions endpoint for chat models
         response = client.chat.completions.create(model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a helpful research assistant."},
@@ -43,7 +42,6 @@ def generate_answer_with_rag(query: str, top_k=5) -> str:
         max_tokens=10000,
         temperature=0.1)
 
-        # Extract and return the answer
         answer = response.choices[0].message.content.strip()
         return answer
     except Exception as e:
