@@ -6,7 +6,7 @@ This is a Retrieval-Augmented Generation (RAG) application designed to recommend
 
 ## 📊 Sequence Diagram
 
-![RAG Sequence Diagram](./assets/rag-sequence.png)
+![RAG Sequence Diagram](./assests/rag-sequence.png)
 
 ---
 
