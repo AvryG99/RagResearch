@@ -132,4 +132,4 @@ streamlit run app/streamlit_app.py
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the CC BY-NC 4.0 License.
