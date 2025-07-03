@@ -132,4 +132,10 @@ streamlit run app/streamlit_app.py
 
 ## 📄 License
 
-This project is licensed under the CC BY-NC 4.0 License.
+This project is **not open source**.
+
+All rights reserved. Use is strictly limited to **AvryG99 (Ha Gia Huy)**.  
+Any other use, distribution, or modification is **prohibited without explicit written permission** from the copyright holder.
+
+See the [LICENSE](./LICENSE) file for full details.
+
