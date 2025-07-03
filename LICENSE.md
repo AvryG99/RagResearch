@@ -1,11 +1,9 @@
-Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+Copyright (c) [Ha Gia Huy] [2025]
 
-You are free to:
-- Share — copy and redistribute the material in any medium or format
-- Adapt — remix, transform, and build upon the material
+All rights reserved.
 
-Under the following terms:
-- Attribution — You must give appropriate credit.
-- NonCommercial — You may not use the material for commercial purposes.
+This software is licensed for use **only by AvryG99 (Ha Gia Huy)**. Any other use, copying, distribution, or modification of this software is strictly prohibited without explicit written permission from the copyright holder.
 
-For full license details, see: https://creativecommons.org/licenses/by-nc/4.0/
+Unauthorized commercial or non-commercial use is not allowed.
+
+For inquiries, contact: hghuy762002@gmail.com
