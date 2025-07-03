@@ -137,5 +137,5 @@ This project is **not open source**.
 All rights reserved. Use is strictly limited to **AvryG99 (Ha Gia Huy)**.  
 Any other use, distribution, or modification is **prohibited without explicit written permission** from the copyright holder.
 
-See the [LICENSE](./LICENSE) file for full details.
+See the [LICENSE](./LICENSE.md) file for full details.
 
