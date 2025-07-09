@@ -80,6 +80,7 @@ pexpect==4.9.0
 pillow==11.2.1
 pinecone==6.0.2
 pinecone-plugin-interface==0.0.7
+pipreqs
 platformdirs==4.3.7
 prompt_toolkit==3.0.51
 propcache==0.3.1
