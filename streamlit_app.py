@@ -1,10 +1,10 @@
 import streamlit as st
+st.set_page_config(page_title="Research Assistant", page_icon="📚")
+
 from rag.rag_module import generate_answer_with_rag
 from rag.followup_module import generate_followup_answer
 from vectordb.retrieve_vector import retrieve_similar_papers
 from vectordb.retrieve_chunks import retrieve_related_chunks_by_titles
-
-st.set_page_config(page_title="Research Assistant", page_icon="📚")
 
 @st.cache_resource
 def store_chunks_in_cache(chunks_data):
